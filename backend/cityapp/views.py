@@ -5,7 +5,7 @@ from .models import UserProfile
 from .serializers import UserProfileSerializer
 
 
-# login page#
+# login #
 @api_view(['GET', 'POST''get'])
 def login(request):
     if request.method == 'GET':
