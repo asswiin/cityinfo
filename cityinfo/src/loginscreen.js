@@ -18,7 +18,7 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState('');
 
 
-  // loginscreen.js - Modified handleLogin
+  // loginscreen.js
 const handleLogin = async () => {
   try {
     const response = await axios.post(
