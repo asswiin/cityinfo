@@ -6,7 +6,7 @@ from .serializers import UserProfileSerializer
 
 
 # login #
-@api_view(['GET', 'POST''get'])
+@api_view(['GET', 'POST'])
 def login(request):
     if request.method == 'GET':
         return Response({"message": "Login API is working."})
