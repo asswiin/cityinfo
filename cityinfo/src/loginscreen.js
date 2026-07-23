@@ -22,7 +22,7 @@ export default function LoginScreen({ navigation }) {
 const handleLogin = async () => {
   try {
     const response = await axios.post(
-      'http://10.182.35.197:8000/api/login/',
+      'http://172.20.10.5:8000/api/login/',
       {
         username: username,
         password: password
@@ -35,8 +35,12 @@ const handleLogin = async () => {
       navigation.navigate('AdminDashboard'); 
     } else {
       Alert.alert('Success', 'Login Successful');
-      // Navigate to regular User Home Screen
-      // navigation.navigate('Home'); 
+      // Collect profile details after login
+      navigation.navigate('UserDetailsForm', {
+        fullName: response.data.name || '',
+        email: username.includes('@') ? username : '',
+        phoneNumber: response.data.phone || username,
+      });
     }
 
   } catch (error) {

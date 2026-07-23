@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth.hashers import check_password
 from .models import UserProfile
-from .serializers import UserProfileSerializer
+from .serializers import UserProfileSerializer, UserProfileDetailsSerializer
 
 
 # login #
@@ -23,6 +23,7 @@ def login(request):
         return Response({
             "message": "Login Successful",
             "name": user.name,
+            "phone": user.phone,
             "is_admin": user.is_admin  # Return the admin status
         })
 
@@ -47,6 +48,41 @@ def register(request):
 
         return Response({
             "message": "Registration Successful"
+        })
+
+    return Response(
+        serializer.errors,
+        status=400
+    )
+
+
+@api_view(['POST'])
+def save_user_details(request):
+    email = request.data.get('email')
+    phone = request.data.get('phone')
+
+    user = None
+    if email:
+        user = UserProfile.objects.filter(email=email).first()
+    if not user and phone:
+        user = UserProfile.objects.filter(phone=phone).first()
+
+    if not user:
+        return Response(
+            {"message": "User not found."},
+            status=404
+        )
+
+    serializer = UserProfileDetailsSerializer(
+        user,
+        data=request.data,
+        partial=True
+    )
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response({
+            "message": "User details saved successfully."
         })
 
     return Response(

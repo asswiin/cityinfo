@@ -96,3 +96,32 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return UserProfile.objects.create(
             **validated_data
         )
+
+
+class UserProfileDetailsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserProfile
+        fields = [
+            'name',
+            'phone',
+            'email',
+            'date_of_birth',
+            'gender',
+            'address',
+            'house_flat',
+            'street',
+            'town',
+            'district',
+            'state',
+            'blood_group',
+            'occupation',
+            'education_qualification',
+        ]
+
+    def update(self, instance, validated_data):
+        for field, value in validated_data.items():
+            setattr(instance, field, value)
+
+        instance.save()
+        return instance

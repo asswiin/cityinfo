@@ -5,6 +5,7 @@ import WelcomeScreen from './src/welcomescreen';
 import LoginScreen from './src/loginscreen';
 import RegisterScreen from './src/registerscreen';
 import AdminDashboard from './src/admindashboard';
+import UserDetailsForm from './src/userdetailsform';
 
 const Stack =
 createNativeStackNavigator();
@@ -34,6 +35,11 @@ export default function App() {
         <Stack.Screen 
         name="AdminDashboard" 
         component={AdminDashboard} />
+
+        <Stack.Screen
+          name="UserDetailsForm"
+          component={UserDetailsForm}
+        />
 
       </Stack.Navigator>
 

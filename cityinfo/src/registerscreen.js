@@ -26,7 +26,7 @@ export default function RegisterScreen({ navigation }) {
     try {
 
       const response = await axios.post(
-        'http://10.47.178.197:8000/api/register/',
+        'https://172.20.10.5:8000/api/register/',
         {
           name: name,
           phone: phone,
@@ -99,7 +99,8 @@ export default function RegisterScreen({ navigation }) {
             placeholderTextColor="#94A3B8"
             keyboardType="phone-pad"
             value={phone}
-            onChangeText={setPhone}
+            onChangeText={(text) => setPhone(text.replace(/\D/g, '').slice(0, 10))}
+            maxLength={10}
             style={styles.input}
           />
 
